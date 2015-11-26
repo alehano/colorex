@@ -116,15 +116,15 @@ func ExtractColors(imgReader io.Reader, limit int, hexPalette []string) ([]Resul
 	// Compute match in percents
 	res := make([]Result, 0, len(weights))
 	for i, w := range weights {
+		if i >= limit {
+			break
+		}
 		r := Result{
 			Hex:   w.hex,
 			Match: w.weight * 100 / totalPixels,
 		}
 		if r.Match > 0 {
 			res = append(res, r)
-		}
-		if i >= limit {
-			break
 		}
 	}
 	return res, nil
